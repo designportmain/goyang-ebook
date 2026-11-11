@@ -1,0 +1,14 @@
+경기도고양교육지원청 웹책자 — 파일 구성
+
+index.html              시안 A (파스텔 블루) — 사이트 첫 화면
+sian-b/index.html       시안 B (다크)
+covers/                 책자 표지 · 안쪽 페이지 이미지
+ebook/grow-2025/        2025 G.R.O.W. 사례집 e북 (pages: 본문 118쪽, thumbs: 미리보기)
+
+■ 책자 추가·수정: index.html(또는 sian-b/index.html)을 메모장/VS Code로 열고 BOOKS 목록을 고치세요.
+  - link  : e북 주소 (이 폴더 안의 e북이면 'ebook/폴더이름/')
+  - cover : 표지 이미지 (covers/ 폴더에 넣고 'covers/파일이름.jpg')
+  - inside: 표지를 열었을 때 보이는 안쪽 페이지 이미지 (선택)
+■ 시안 B 안에서 이미지·e북 주소는 한 단계 위 폴더라 앞에 ../ 를 붙여요. (예: '../covers/표지.jpg')
+■ 컴퓨터에서 index.html을 더블클릭하면 바로 미리볼 수 있어요.
+■ 폰트(페이퍼로지)는 인터넷에 연결된 상태에서 보여요.

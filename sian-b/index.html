@@ -18,7 +18,7 @@
 
 :root{
   --bg:#0d0e11; --bg2:#16181d; --ink:#f2f0e9; --mut:#8a8f9a; --line:#262931;
-  --accent:#d4ff3a; --serif:'Paperlogy','IBM Plex Sans KR',system-ui,sans-serif; --sans:'Paperlogy','IBM Plex Sans KR',system-ui,sans-serif;
+  --accent:#f38e3f; --serif:'Paperlogy','IBM Plex Sans KR',system-ui,sans-serif; --sans:'Paperlogy','IBM Plex Sans KR',system-ui,sans-serif;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -84,7 +84,7 @@ a{color:inherit;text-decoration:none}
 .card:hover .book,.card:focus-visible .book{transform:translateY(-12px)}
 .card:hover .book .cv,.card:focus-visible .book .cv{transform:rotateY(-66deg);filter:none;box-shadow:20px 14px 36px -8px #000a}
 .card:hover .book .cv::after{background:linear-gradient(90deg,transparent 30%,#00000040)}
-.card:hover .book .inner{box-shadow:0 0 0 1px #ffffff1a,0 30px 60px -10px #000,0 0 60px -10px #d4ff3a33}
+.card:hover .book .inner{box-shadow:0 0 0 1px #ffffff1a,0 30px 60px -10px #000,0 0 60px -10px #f38e3f33}
 .go{position:absolute;right:8%;bottom:7%;z-index:3;opacity:0;transition:opacity .3s .25s,transform .3s .25s;transform:translateY(6px)}
 .go span{background:var(--accent);color:#0d0e11;font-size:12.5px;font-weight:800;padding:9px 14px;display:flex;gap:6px;align-items:center}
 .go svg{width:13px;height:13px}
@@ -92,6 +92,7 @@ a{color:inherit;text-decoration:none}
 .card:focus-visible{outline:none}
 .card:focus-visible .book{outline:2px solid var(--accent);outline-offset:8px}
 .badge{display:inline-block;background:var(--accent);color:#0d0e11;font-size:10.5px;font-weight:800;letter-spacing:.08em;padding:2px 7px;margin-right:8px;vertical-align:1px}
+.ftag{display:inline-block;border:1px solid #f38e3f;color:#f38e3f;font-size:10.5px;font-weight:700;padding:1px 7px;margin-right:8px;vertical-align:1px}
 .meta{margin-top:36px}
 .meta .cat{font-size:12px;color:var(--mut);font-weight:600;letter-spacing:.06em}
 .meta h3{font-size:18px;line-height:1.4;margin:8px 0 6px;font-weight:700;letter-spacing:-.01em;transition:color .3s}
@@ -163,6 +164,7 @@ footer .links svg{width:16px;height:16px}
 <script>
 /* =====================================================================
    ✏️ 책자 목록 — 여기만 고치면 됩니다
+   - tag     : (선택) 책 정보 위에 붙는 작은 이름표 — 예) 'e북 파일형식'
    - title   : 책자 제목
    - desc    : 한두 줄 소개
    - cat     : 분류 (같은 이름끼리 필터 버튼으로 묶여요)
@@ -171,30 +173,25 @@ footer .links svg{width:16px;height:16px}
    - cover   : 표지 이미지 주소 (비워 두면 자동으로 표지를 그려 줘요)
    - inside  : 마우스를 올려 표지가 열릴 때 보이는 안쪽 페이지 이미지 (선택)
    - color   : 자동 표지 색 [바탕색, 포인트색]
-   - featured: true 인 책자 하나가 상단에 크게 나와요 (없으면 가장 최신 책자)
+   - featured: true 인 책자 하나가 상단에 크게 나와요 (없으면 목록 맨 위 책자)
    ※ 사이트에는 이 목록에 적힌 순서대로 보여요
    ===================================================================== */
 const BOOKS = [
-  {title:'2025 G.R.O.W. 디지털 기반 수업 혁신 사례집', desc:'하이러닝 수업 실천, 학생 성장의 길을 열다 — 고양미래교육연구회 15개 수업 사례', cat:'수업 사례집', date:'2025-12', link:'https://issuu.com/designport_main/docs/2025_g.r.o.w._?fr=xKAE9_zMzMw', cover:'../covers/grow-2025.jpg', inside:'../covers/grow-2025-inside.jpg', color:['#6b4fbb','#e9e2ff'], featured:true},
-  {title:'2026 학교 교육과정 안내서', desc:'학부모와 함께 보는 올해의 교육과정 한눈에 보기', cat:'안내서', date:'2026-03', link:'https://example.com/ebook/curriculum-2026', cover:'', color:['#e2573a','#fff1d6']},
-  {title:'온새미 2026 여름호', desc:'함께 설계하는 프로젝트 수업, 학생이 주인이 되는 교실', cat:'계간 웹진', date:'2026-07', link:'https://example.com/ebook/onsaemi-2026-summer', cover:'', color:['#3c4f2e','#f2b134']},
-  {title:'마을과 함께하는 배움 지도', desc:'우리 동네 배움터 40곳과 체험 프로그램 소개', cat:'안내서', date:'2026-05', link:'https://example.com/ebook/village-map', cover:'', color:['#f2b134','#23305a']},
-  {title:'질문으로 여는 과학 수업', desc:'짝 토론·예측 활동을 활용한 중학교 과학 수업 자료', cat:'수업 사례집', date:'2026-04', link:'https://example.com/ebook/science-questions', cover:'', color:['#5b3a6e','#ffb199']},
-  {title:'온새미 2026 봄호', desc:'새 학기 첫 주, 관계를 만드는 열 가지 활동', cat:'계간 웹진', date:'2026-04', link:'https://example.com/ebook/onsaemi-2026-spring', cover:'', color:['#c94f6d','#fde3ea']},
-  {title:'교사 배움 모임 운영 가이드', desc:'전문적 학습공동체를 처음 꾸리는 학교를 위한 안내', cat:'연수 자료', date:'2026-02', link:'https://example.com/ebook/teacher-community', cover:'', color:['#1f6f8b','#c8f0ea']},
-  {title:'2025 배움 성장 보고서', desc:'한 해 동안의 정책 실행과 학교 현장의 변화', cat:'보고서', date:'2025-12', link:'https://example.com/ebook/report-2025', cover:'', color:['#2b2a28','#e2573a']},
-  {title:'온새미 2025 겨울호', desc:'평가를 다시 생각하다 — 성장을 기록하는 방법', cat:'계간 웹진', date:'2025-12', link:'https://example.com/ebook/onsaemi-2025-winter', cover:'', color:['#3a5a8c','#dbe8ff']},
-  {title:'디지털 시민교육 수업 자료', desc:'초·중학교에서 바로 쓰는 디지털 리터러시 활동지', cat:'연수 자료', date:'2025-10', link:'https://example.com/ebook/digital-citizen', cover:'', color:['#0f766e','#f2b134']},
-  {title:'학부모 아카데미 자료집', desc:'자녀와 함께 성장하는 대화법 강의 모음', cat:'안내서', date:'2025-09', link:'https://example.com/ebook/parents-academy', cover:'', color:['#8a5a2b','#fff1d6']},
+  /* ▼ 새 책자는 이 줄 바로 아래에 추가하세요 (맨 위가 사이트 맨 앞에 보여요)
+  {title:'책자 제목', desc:'한두 줄 소개', cat:'분류', date:'2026-11', link:'e북 주소', cover:'../covers/표지.jpg', inside:'', color:['#23305a','#f2b134']},
+  */
+  {tag:'e북 파일형식', title:'2025 G.R.O.W. 디지털 기반 수업 혁신 사례집', desc:'하이러닝 수업 실천, 학생 성장의 길을 열다 — 고양미래교육연구회 15개 수업 사례', cat:'수업 사례집', date:'2025-12', link:'../ebook/grow-file/index.html', cover:'../covers/grow-2025.jpg', inside:'../covers/grow-2025-inside.jpg', color:['#6b4fbb','#e9e2ff']},
+  {tag:'e북 링크형식', title:'2025 G.R.O.W. 디지털 기반 수업 혁신 사례집', desc:'하이러닝 수업 실천, 학생 성장의 길을 열다 — 고양미래교육연구회 15개 수업 사례', cat:'수업 사례집', date:'2025-12', link:'https://issuu.com/designport_main/docs/2025_g.r.o.w._?fr=xKAE9_zMzMw', cover:'../covers/grow-2025.jpg', inside:'../covers/grow-2025-inside.jpg', color:['#6b4fbb','#e9e2ff']},
+  {tag:'e북 뷰어형식', title:'2025 G.R.O.W. 디지털 기반 수업 혁신 사례집', desc:'하이러닝 수업 실천, 학생 성장의 길을 열다 — 고양미래교육연구회 15개 수업 사례', cat:'수업 사례집', date:'2025-12', link:'../ebook/grow-2025/index.html', cover:'../covers/grow-2025.jpg', inside:'../covers/grow-2025-inside.jpg', color:['#6b4fbb','#e9e2ff']},
 ];
-const NEW_MONTHS = 3; // 최근 몇 달 안의 책자에 NEW 표시
+const NEW_MONTHS = 3; // 발간 후 몇 달 동안 NEW 표시
 
 /* ================================================================== */
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const ym=d=>{const [y,m]=(d||'0-0').split('-').map(Number);return y*12+(m||1)};
-const latest=Math.max(...BOOKS.map(b=>ym(b.date)));
-const isNew=b=>latest-ym(b.date)<NEW_MONTHS;
+const _now=new Date(), nowYM=_now.getFullYear()*12+_now.getMonth()+1;
+const isNew=b=>nowYM-ym(b.date)<NEW_MONTHS; // 오늘 기준 최근 N개월
 let state={cat:'전체',q:'',sort:'order'}; // order = 목록에 적은 순서대로
 
 function patternSVG(b,i){
@@ -220,7 +217,7 @@ function bookHTML(b,i){
   </div>`;
 }
 function renderFeatured(){
-  const f=BOOKS.find(b=>b.featured)||[...BOOKS].sort((a,b)=>ym(b.date)-ym(a.date))[0];
+  const f=BOOKS.find(b=>b.featured)||BOOKS[0];
   if(!f) return;
   $('#feat').innerHTML=`<div class="halo"></div><a class="card feat-book" href="${esc(f.link)}" target="_blank" rel="noopener" aria-label="${esc(f.title)} e북 열기"><span class="feat-tag">— Featured</span>${bookHTML(f,BOOKS.indexOf(f))}</a>`;
 }
@@ -241,7 +238,7 @@ function renderGrid(){
   $('#grid').innerHTML=list.length?list.map(({b,i},k)=>`
     <a class="card" href="${esc(b.link)}" target="_blank" rel="noopener" style="animation-delay:${Math.min(k,12)*40}ms" aria-label="${esc(b.title)} e북 열기 (새 창)">
       <div class="stand"><span class="idx">${String(k+1).padStart(2,'0')}</span>${bookHTML(b,i)}</div>
-      <div class="meta"><div class="cat">${isNew(b)?'<span class="badge">NEW</span>':''}${esc(b.cat)} · ${esc((b.date||'').replace('-','.'))}</div><h3>${esc(b.title)}</h3><p>${esc(b.desc)}</p></div>
+      <div class="meta"><div class="cat">${isNew(b)?'<span class="badge">NEW</span>':''}${b.tag?`<span class="ftag">${esc(b.tag)}</span>`:''}${esc(b.cat)} · ${esc((b.date||'').replace('-','.'))}</div><h3>${esc(b.title)}</h3><p>${esc(b.desc)}</p></div>
     </a>`).join(''):`<div class="empty">찾는 책자가 없어요. 다른 검색어를 입력해 보세요.</div>`;
 }
 renderFeatured(); renderGrid();

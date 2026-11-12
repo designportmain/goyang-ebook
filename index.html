@@ -200,7 +200,6 @@ footer .links svg{width:16px;height:16px}
    - cat     : 분류 (같은 이름끼리 필터 버튼으로 묶여요)
    - date    : 발간일 'YYYY-MM' (최신순 정렬·NEW 표시에 사용)
    - link    : 클릭하면 열릴 e북 주소
-   - pdf     : (선택) 책자 아래 'PDF 다운로드' 버튼이 받을 파일 — pdf 폴더에 올리고 'pdf/파일이름.pdf' (비우면 버튼 없음)
    - cover   : 표지 이미지 주소 (비워 두면 자동으로 표지를 그려 줘요)
    - inside  : 마우스를 올려 표지가 열릴 때 보이는 안쪽 페이지 이미지 (선택)
    - color   : 자동 표지 색 [바탕색, 포인트색]
@@ -209,11 +208,11 @@ footer .links svg{width:16px;height:16px}
    ===================================================================== */
 const BOOKS = [
   /* ▼ 새 책자는 이 줄 바로 아래에 추가하세요 (맨 위가 사이트 맨 앞에 보여요)
-  {title:'책자 제목', desc:'한두 줄 소개', cat:'분류', date:'2026-11', link:'e북 주소', pdf:'pdf/파일이름.pdf', cover:'covers/표지.jpg', inside:'', color:['#23305a','#f2b134']},
+  {title:'책자 제목', desc:'한두 줄 소개', cat:'분류', date:'2026-11', link:'e북 주소', cover:'covers/표지.jpg', inside:'', color:['#23305a','#f2b134']},
   */
-  {tag:'e북 파일형식', title:'2025 G.R.O.W. 디지털 기반 수업 혁신 사례집', desc:'하이러닝 수업 실천, 학생 성장의 길을 열다 — 고양미래교육연구회 15개 수업 사례', cat:'수업 사례집', date:'2025-12', link:'ebook/grow-file/index.html', pdf:'pdf/grow-2025.pdf', cover:'covers/grow-2025.jpg', inside:'covers/grow-2025-inside.jpg', color:['#6b4fbb','#e9e2ff']},
-  {tag:'e북 링크형식', title:'2025 G.R.O.W. 디지털 기반 수업 혁신 사례집', desc:'하이러닝 수업 실천, 학생 성장의 길을 열다 — 고양미래교육연구회 15개 수업 사례', cat:'수업 사례집', date:'2025-12', link:'https://issuu.com/designport_main/docs/2025_g.r.o.w._?fr=xKAE9_zMzMw', pdf:'pdf/grow-2025.pdf', cover:'covers/grow-2025.jpg', inside:'covers/grow-2025-inside.jpg', color:['#6b4fbb','#e9e2ff']},
-  {tag:'e북 뷰어형식', title:'2025 G.R.O.W. 디지털 기반 수업 혁신 사례집', desc:'하이러닝 수업 실천, 학생 성장의 길을 열다 — 고양미래교육연구회 15개 수업 사례', cat:'수업 사례집', date:'2025-12', link:'ebook/grow-2025/index.html', pdf:'pdf/grow-2025.pdf', cover:'covers/grow-2025.jpg', inside:'covers/grow-2025-inside.jpg', color:['#6b4fbb','#e9e2ff']},
+  {tag:'e북 파일형식', title:'2025 G.R.O.W. 디지털 기반 수업 혁신 사례집', desc:'하이러닝 수업 실천, 학생 성장의 길을 열다 — 고양미래교육연구회 15개 수업 사례', cat:'수업 사례집', date:'2025-12', link:'ebook/grow-file/index.html', cover:'covers/grow-2025.jpg', inside:'covers/grow-2025-inside.jpg', color:['#6b4fbb','#e9e2ff']},
+  {tag:'e북 링크형식', title:'2025 G.R.O.W. 디지털 기반 수업 혁신 사례집', desc:'하이러닝 수업 실천, 학생 성장의 길을 열다 — 고양미래교육연구회 15개 수업 사례', cat:'수업 사례집', date:'2025-12', link:'https://issuu.com/designport_main/docs/2025_g.r.o.w._?fr=xKAE9_zMzMw', cover:'covers/grow-2025.jpg', inside:'covers/grow-2025-inside.jpg', color:['#6b4fbb','#e9e2ff']},
+  {tag:'e북 뷰어형식', title:'2025 G.R.O.W. 디지털 기반 수업 혁신 사례집', desc:'하이러닝 수업 실천, 학생 성장의 길을 열다 — 고양미래교육연구회 15개 수업 사례', cat:'수업 사례집', date:'2025-12', link:'ebook/grow-2025/index.html', cover:'covers/grow-2025.jpg', inside:'covers/grow-2025-inside.jpg', color:['#6b4fbb','#e9e2ff']},
 ];
 const NEW_MONTHS = 3; // 발간 후 몇 달 동안 NEW 표시
 
@@ -276,7 +275,7 @@ function renderGrid(){
     <div class="item" style="animation-delay:${Math.min(k,12)*40}ms"><a class="card" href="${esc(b.link)}" target="_blank" rel="noopener" aria-label="${esc(b.title)} e북 열기 (새 창)">
       <div class="stand">${bookHTML(b,i)}</div>
       <div class="meta"><div class="cat">${isNew(b)?'<span class="badge">NEW</span>':''}${b.tag?`<span class="ftag">${esc(b.tag)}</span>`:''}${esc(b.cat)} · ${esc((b.date||'').replace('-','.'))}</div><h3>${esc(b.title)}</h3><p>${esc(b.desc)}</p></div>
-    </a>${dlHTML(b)}</div>`).join(''):`<div class="empty">찾는 책자가 없어요. 다른 검색어를 입력해 보세요.</div>`;
+    </a></div>`).join(''):`<div class="empty">찾는 책자가 없어요. 다른 검색어를 입력해 보세요.</div>`;
 }
 renderFeatured(); renderGrid();
 </script>

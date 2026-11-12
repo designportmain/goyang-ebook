@@ -20,14 +20,15 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 button:disabled{opacity:.3;cursor:default}
 
 /* ---------- layout ---------- */
-.app{display:grid;grid-template-rows:auto 1fr auto;height:100%;}
+.app{display:grid;grid-template-rows:auto minmax(0,1fr) auto;grid-template-columns:minmax(0,1fr);height:100%;height:100dvh;width:100%;}
 header.top{display:flex;align-items:center;gap:14px;padding:14px 22px;border-bottom:1px solid #ffffff0d;z-index:5}
-.brand{display:flex;align-items:center;gap:10px;min-width:0}
+.brand{display:flex;align-items:center;gap:10px;min-width:0;flex:1 1 auto}
 .mark{width:30px;height:30px;border-radius:9px;background:conic-gradient(from 200deg,var(--coral),var(--mustard),var(--teal),var(--coral));display:grid;place-items:center;flex:none}
 .mark i{width:12px;height:12px;border-radius:50%;background:var(--ink)}
 .brand small{display:block;font-size:10px;letter-spacing:.22em;color:var(--mut);text-transform:uppercase}
 .brand b{display:block;font-family:var(--serif);font-size:17px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.top .sp{flex:1}
+.top .sp{flex:0 0 8px}
+header.top .pill{flex:none}
 .pill{text-decoration:none;color:inherit;display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:999px;border:1px solid var(--line);font-size:13px;transition:.2s}
 .pill:hover{border-color:var(--accent);color:var(--accent2)}
 .pill.solid{background:var(--accent);border-color:var(--accent);color:#0f1530;font-weight:600}
@@ -147,11 +148,27 @@ footer.bar{display:flex;align-items:center;gap:6px;padding:12px 18px 16px;justif
 @media (max-width:760px){
   header.top{padding:10px 14px}
   .pill .lbl{display:none}.pill{padding:9px 11px}
+  .brand small{display:none}
+  .brand b{font-size:15px}
+  .mark{width:26px;height:26px}
+  .hint{white-space:normal;text-align:center;width:90%;bottom:8px}
+  .dock{gap:0}
+  .ib{width:36px}
   .nav-edge{display:none}
   .hide-m{display:none}
   .range{display:none}
   .sizer{padding:14px}
   footer.bar{padding:8px 8px 12px}
+}
+
+@media (max-height:520px){
+  header.top{padding:6px 14px}
+  .brand small{display:none}.brand b{font-size:14px}.mark{width:24px;height:24px}
+  header.top .pill{padding:6px 12px}
+  footer.bar{padding:4px 8px 6px}
+  .ib,.counter{height:34px}
+  .hint,.nav-edge{display:none}
+  .sizer{padding:8px}
 }
 
 /* ================= sample magazine pages ================= */
@@ -326,7 +343,7 @@ function nextIdx(){const v=visible(spread(S.cur));const n=Math.max(...v)+1;retur
 function prevIdx(){const v=visible(spread(S.cur));const p=Math.min(...v)-1;return p>=0?p:null}
 
 function layout(){
-  const pad=innerWidth<760?28:56, side=innerWidth<760?0:150;
+  const small=innerWidth<760||innerHeight<520; const pad=small?16:56, side=small?0:150;
   const W=stage.clientWidth-pad-side, H=stage.clientHeight-pad;
   const cols=isDouble()?2:1, z=ZOOMS[S.zoomI];
   let h=Math.min(H, W/cols*S.ratio), w=h/S.ratio;

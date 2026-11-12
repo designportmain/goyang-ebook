@@ -10,7 +10,7 @@
 <style>
 :root{
   --ink:#15171c; --ink2:#1f2229; --ink3:#2a2e37; --line:#353a45;
-  --txt:#e9e6df; --mut:#9aa0ab; --accent:#7f9cff; --accent2:#b4c6ff;
+  --txt:#e9e6df; --mut:#9aa0ab; --accent:#f38e3f; --accent2:#ffc08f;
   --paper:#fbf8f1; --navy:#23305a; --teal:#2a9d8f; --mustard:#f2b134; --coral:#ff7a59;
   --serif:'Gowun Batang',serif; --sans:'IBM Plex Sans KR',system-ui,sans-serif;
 }
@@ -29,10 +29,11 @@ header.top{display:flex;align-items:center;gap:14px;padding:14px 22px;border-bot
 .brand b{display:block;font-family:var(--serif);font-size:17px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .top .sp{flex:0 0 8px}
 header.top .pill{flex:none}
+header.top .pill+.pill{margin-left:8px}
 .pill{text-decoration:none;color:inherit;display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:999px;border:1px solid var(--line);font-size:13px;transition:.2s}
 .pill:hover{border-color:var(--accent);color:var(--accent2)}
-.pill.solid{background:var(--accent);border-color:var(--accent);color:#0f1530;font-weight:600}
-.pill.solid:hover{background:var(--accent2);color:#0f1530}
+.pill.solid{background:var(--accent);border-color:var(--accent);color:#1f1209;font-weight:600}
+.pill.solid:hover{background:var(--accent2);color:#1f1209}
 .pill svg{width:16px;height:16px}
 
 .stage{position:relative;overflow:hidden;touch-action:pan-y;user-select:none;
@@ -73,7 +74,7 @@ header.top .pill{flex:none}
 
 .nav-edge{position:absolute;top:50%;transform:translateY(-50%);width:52px;height:52px;border-radius:50%;
   background:#ffffff0f;backdrop-filter:blur(6px);display:grid;place-items:center;z-index:4;transition:.2s;border:1px solid #ffffff14}
-.nav-edge:hover:not(:disabled){background:var(--accent);color:#0f1530;border-color:var(--accent)}
+.nav-edge:hover:not(:disabled){background:var(--accent);color:#1f1209;border-color:var(--accent)}
 .nav-edge svg{width:22px;height:22px}
 .nav-edge.prev{left:22px}.nav-edge.next{right:22px}
 .stage.zoomed .nav-edge{position:fixed;top:50%}
@@ -104,11 +105,11 @@ footer.bar{display:flex;align-items:center;gap:6px;padding:12px 18px 16px;justif
 .dhead h3{margin:0;font-family:var(--serif);font-size:19px;flex:1}
 .tabs{display:flex;gap:6px;padding:0 18px 14px}
 .tab{flex:1;padding:9px;border-radius:10px;font-size:13px;color:var(--mut);background:var(--ink)}
-.tab.on{background:var(--accent);color:#0f1530;font-weight:600}
+.tab.on{background:var(--accent);color:#1f1209;font-weight:600}
 .dbody{flex:1;overflow:auto;padding:4px 18px 24px}
 .toc a{display:flex;gap:14px;align-items:baseline;padding:13px 12px;border-radius:12px;color:var(--txt);text-decoration:none;cursor:pointer;border-bottom:1px solid #ffffff08}
 .toc a:hover{background:var(--ink3)}
-.toc a.on{background:#7f9cff22;color:var(--accent2)}
+.toc a.on{background:#f38e3f22;color:var(--accent2)}
 .toc a em{font-style:normal;color:var(--accent);font-size:12px;width:40px;flex:none}
 .toc a span{flex:1;font-size:14.5px;line-height:1.45}
 .toc a small{color:var(--mut);font-size:12px}
@@ -130,7 +131,7 @@ footer.bar{display:flex;align-items:center;gap:6px;padding:12px 18px 16px;justif
 .box h3{margin:0 0 6px;font-family:var(--serif);font-size:22px}
 .box p.d{margin:0 0 18px;color:var(--mut);font-size:13.5px;line-height:1.6}
 .drop{border:1.5px dashed var(--line);border-radius:16px;padding:30px 16px;text-align:center;cursor:pointer;transition:.2s;display:block}
-.drop:hover,.drop.over{border-color:var(--accent);background:#7f9cff0d}
+.drop:hover,.drop.over{border-color:var(--accent);background:#f38e3f0d}
 .drop svg{width:34px;height:34px;color:var(--accent)}
 .drop b{display:block;margin:8px 0 4px;font-size:15px}
 .drop span{font-size:12.5px;color:var(--mut)}
@@ -273,7 +274,8 @@ footer.bar{display:flex;align-items:center;gap:6px;padding:12px 18px 16px;justif
       <div style="min-width:0"><small>Web Book Viewer</small><b id="docTitle"></b></div>
     </div>
     <div class="sp"></div>
-    <a class="pill" id="btnHome" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h6v14H4zM14 5l6 1-2 14-6-1z"/></svg><span class="lbl">책자 목록으로</span></a>
+    <a class="pill solid" id="btnPdf" href="#" download="2025_GROW_디지털기반수업혁신사례집.pdf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M5 21h14"/></svg><span class="lbl">PDF 다운로드</span></a>
+  <a class="pill" id="btnHome" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h6v14H4zM14 5l6 1-2 14-6-1z"/></svg><span class="lbl">책자 목록으로</span></a>
   </header>
 
   <main class="stage" id="stage">
@@ -569,6 +571,7 @@ const BOOK = {
   title: '2025 G.R.O.W. 디지털 기반 수업 혁신 사례집',
   pageCount: 118,
   ratio: 1754/1240,
+  PDF_URL: 'grow-2025.pdf',   // PDF 다운로드 버튼이 내려받을 파일 (비워 두면 버튼이 숨겨져요)
   LIBRARY_URL: '../../index.html',
   toc: [
     {t:'표지',p:1},{t:'차례',p:3},
@@ -596,6 +599,7 @@ function loadBook(){
   S.toc=BOOK.toc.map(x=>({t:x.t,p:x.p-1}));
   S.title=BOOK.title; S.ratio=BOOK.ratio;
   document.getElementById('btnHome').href=BOOK.LIBRARY_URL;
+  const pb=document.getElementById('btnPdf'); if(BOOK.PDF_URL) pb.href=BOOK.PDF_URL; else pb.style.display='none';
   start(hashPage());
 }
 

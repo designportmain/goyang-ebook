@@ -55,6 +55,18 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .stats div b{display:block;font-family:var(--serif);font-size:30px}
 .stats div span{font-size:13px;color:var(--mut)}
 
+/* year switch */
+.years{display:inline-flex;gap:4px;background:#ffffffc7;border:1px solid #f3d6bf;border-radius:99px;padding:5px;margin-bottom:30px;box-shadow:0 8px 24px -14px #c25a1755}
+.years button{border:0;background:none;padding:9px 26px;border-radius:99px;font:inherit;font-size:16px;font-weight:700;color:#a08d7e;cursor:pointer;transition:background .25s,color .25s,box-shadow .25s;letter-spacing:.02em}
+.years button:hover:not(.on){color:#c25a17}
+.years button.on{background:#e8742a;color:#fff;box-shadow:0 6px 16px -6px #e8742a}
+.hero-text{transition:opacity .3s,transform .3s}
+.hero-text.swap,.feat.swap,#grid.swap{opacity:0;transform:translateY(10px)}
+.feat,#grid{transition:opacity .3s,transform .3s}
+.hero .sub:empty{display:none}
+.feat-empty{position:relative;z-index:1;width:min(290px,70%);aspect-ratio:1/1.414;border:2px dashed #eab994;border-radius:4px 8px 8px 4px;background:#ffffff8c;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:#c25a17;text-align:center;transform:rotate(-4deg)}
+.feat-empty b{font-size:40px;font-weight:800;letter-spacing:-.02em}
+.feat-empty span{font-size:14px;color:#8a7768}
 /* featured */
 .feat .halo{position:absolute;width:88%;aspect-ratio:1;border-radius:50%;background:#ffffff8c;bottom:0;box-shadow:inset 0 0 0 1px #ffffff}
 .feat{position:relative;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;min-height:460px}
@@ -163,6 +175,9 @@ footer .links svg{width:16px;height:16px}
   .hero{padding:40px 0 20px}
   .hero .wrap{grid-template-columns:minmax(0,1fr);gap:20px}
   .feat{min-height:380px;order:-1}
+  .hero .wrap>div:first-child{display:contents}
+  .years{order:-2;justify-self:center;margin-bottom:4px}
+  .years button{padding:9px 30px}
   .top nav{display:none}
   .tools{top:64px}
   .search{min-width:0;flex:1}
@@ -186,10 +201,8 @@ footer .links svg{width:16px;height:16px}
 
 <section class="hero" id="top"><div class="wrap">
   <div>
-    <div class="eyebrow">Digital Library</div>
-    <h1><em>2025 G.R.O.W.</em><br>디지털 기반 수업 혁신 사례집</h1>
-    <div class="sub">AI디지털 수업 실천, 학생 성장의 길을 열다</div>
-    <p>고양미래교육연구회 선생님들의 15가지 수업 사례를 한 편씩 e북으로 만나 보세요. 표지를 누르면 e북이 새 창으로 열립니다.</p>
+    <div class="years" id="years" role="tablist" aria-label="연도 선택"></div>
+    <div class="hero-text" id="heroText"></div>
   </div>
   <div class="feat" id="feat"></div>
 </div></section>
@@ -215,7 +228,7 @@ footer .links svg{width:16px;height:16px}
    - title   : 책자 제목
    - desc    : 한두 줄 소개
    - cat     : 분류 (같은 이름끼리 필터 버튼으로 묶여요)
-   - date    : 발간일 'YYYY-MM' (최신순 정렬·NEW 표시에 사용)
+   - date    : 발간일 'YYYY-MM' — 앞 네 자리(연도)로 위쪽 연도 버튼에 나뉘어 들어가요
    - link    : 클릭하면 열릴 e북 주소
    - cover   : 표지 이미지 주소 (비워 두면 자동으로 표지를 그려 줘요)
    - inside  : 마우스를 올려 표지가 열릴 때 보이는 안쪽 페이지 이미지 (선택)
@@ -243,6 +256,19 @@ const BOOKS = [
   {title:'AI를 활용한 깊이 있는 개념 기반 수학 수업, 하이러닝으로 기록하기', desc:'화정고 김지애 선생님', cat:'고2 · 확률과 통계', date:'2025-12', link:'ebook/case-14/index.html', cover:'covers/case-14.jpg', inside:'covers/case-14-inside.jpg', color:['#23305a','#f2b134']},
   {title:'AI코스웨어를 활용한 기초학력 보장 지도', desc:'향동고 박성혁 선생님', cat:'고1 · 수학', date:'2025-12', link:'ebook/case-15/index.html', cover:'covers/case-15.jpg', inside:'covers/case-15-inside.jpg', color:['#23305a','#f2b134']},
 ];
+/* =====================================================================
+   📅 연도 설정 — 위쪽 연도 버튼과 연도별 메인 문구
+   - year : 버튼에 표시될 연도 (책자의 date 앞 네 자리와 같으면 그 연도에 들어가요)
+   - title: 큰 제목 (<em>…</em>은 주황색, <br>은 줄바꿈)
+   - sub  : 주황 부제 (비우면 숨겨져요)
+   - desc : 설명 문장
+   맨 위에 적은 연도가 버튼 맨 앞에 나와요.
+   ===================================================================== */
+const YEARS = [
+  {year:'2026', title:'<em>2026</em><br>수업 혁신 사례집', sub:'', desc:'2026년 책자를 준비하고 있어요. 곧 이곳에서 만나 보실 수 있어요.'},
+  {year:'2025', title:'<em>2025 G.R.O.W.</em><br>디지털 기반 수업 혁신 사례집', sub:'AI디지털 수업 실천, 학생 성장의 길을 열다', desc:'고양미래교육연구회 선생님들의 15가지 수업 사례를 한 편씩 e북으로 만나 보세요. 표지를 누르면 e북이 새 창으로 열립니다.'},
+];
+const DEFAULT_YEAR = ''; // 처음 열릴 연도. 비워 두면 책자가 있는 가장 최근 연도로 열려요.
 const NEW_MONTHS = 3; // 발간 후 몇 달 동안 NEW 표시
 
 /* ================================================================== */
@@ -251,7 +277,7 @@ const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&
 const ym=d=>{const [y,m]=(d||'0-0').split('-').map(Number);return y*12+(m||1)};
 const _now=new Date(), nowYM=_now.getFullYear()*12+_now.getMonth()+1;
 const isNew=b=>nowYM-ym(b.date)<NEW_MONTHS; // 오늘 기준 최근 N개월
-let state={cat:'전체',q:'',sort:'order'}; // order = 목록에 적은 순서대로
+let state={cat:'전체',q:'',sort:'order',year:''}; // order = 목록에 적은 순서대로
 
 function patternSVG(b,i){
   const [bg,pt]=b.color||['#23305a','#f2b134']; const v=i%4;
@@ -285,8 +311,13 @@ const FEAT_SECONDS = 4; // 상단 대표 책자가 넘어가는 간격(초)
 let featI=0, featTimer=null, featPaused=false, featStart=0;
 const arrowL='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m15 18-6-6 6-6"/></svg>';
 const arrowR='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m9 18 6-6-6-6"/></svg>';
+let FB=[];
+const bookYear=b=>String(b.year||(b.date||'').slice(0,4));
+const yearBooks=()=>BOOKS.filter(b=>bookYear(b)===state.year);
 function renderFeatured(){
-  if(!BOOKS.length) return;
+  cancelAnimationFrame(featTimer);
+  FB=yearBooks();
+  if(!FB.length){$('#feat').innerHTML=`<div class="halo"></div><div class="feat-empty"><b>${esc(state.year)}</b><span>책자를 준비하고 있어요</span></div>`;return}
   $('#feat').innerHTML=`<div class="halo"></div><div class="feat-stage"></div>
     <div class="feat-nav"><button type="button" class="fp" aria-label="이전 책자">${arrowL}</button><div class="feat-count"></div><button type="button" class="fn" aria-label="다음 책자">${arrowR}</button></div>
     <div class="feat-bar"><i></i></div><div class="feat-cap"></div>`;
@@ -295,12 +326,12 @@ function renderFeatured(){
   const st=$('#feat .feat-stage');
   st.addEventListener('mouseenter',()=>featPaused=true);
   st.addEventListener('mouseleave',()=>{featPaused=false;restartFeat()});
-  BOOKS.forEach(b=>{if(b.cover){const im=new Image();im.src=b.cover}});
-  const fi=BOOKS.findIndex(b=>b.featured);
+  FB.forEach(b=>{if(b.cover){const im=new Image();im.src=b.cover}});
+  const fi=FB.findIndex(b=>b.featured);
   showFeat(fi>=0?fi:0,0); restartFeat();
 }
 function showFeat(i,dir){
-  const n=BOOKS.length; featI=(i+n)%n; const b=BOOKS[featI];
+  const n=FB.length; if(!n) return; featI=(i+n)%n; const b=FB[featI];
   const st=$('#feat .feat-stage'); const old=st.querySelector('.feat-book:not(.leave)');
   const a=document.createElement('a');
   a.className='card feat-book'+(old?' enter':''); a.href=b.link; a.target='_blank'; a.rel='noopener';
@@ -333,19 +364,44 @@ function renderChips(){
 }
 function renderGrid(){
   const q=state.q.trim().toLowerCase();
-  let list=BOOKS.map((b,i)=>({b,i})).filter(({b})=>(state.cat==='전체'||b.cat===state.cat)&&(!q||(b.title+' '+b.desc+' '+b.cat).toLowerCase().includes(q)));
+  let list=BOOKS.map((b,i)=>({b,i})).filter(({b})=>bookYear(b)===state.year&&(state.cat==='전체'||b.cat===state.cat)&&(!q||(b.title+' '+b.desc+' '+b.cat).toLowerCase().includes(q)));
   if(state.sort==='new') list.sort((x,y)=>ym(y.b.date)-ym(x.b.date)||x.i-y.i);
   if(state.sort==='old') list.sort((x,y)=>ym(x.b.date)-ym(y.b.date)||x.i-y.i);
   if(state.sort==='title') list.sort((x,y)=>x.b.title.localeCompare(y.b.title,'ko'));
-  $('#secTitle').textContent=state.cat==='전체'?'전체 책자':state.cat;
+  $('#secTitle').textContent=`${state.year} 책자`;
   $('#count').textContent=`${list.length}권`;
   $('#grid').innerHTML=list.length?list.map(({b,i},k)=>`
     <div class="item" style="animation-delay:${Math.min(k,12)*40}ms"><a class="card" href="${esc(b.link)}" target="_blank" rel="noopener" aria-label="${esc(b.title)} e북 열기 (새 창)">
       <div class="stand">${bookHTML(b,i)}</div>
       <div class="meta"><div class="cat">${isNew(b)?'<span class="badge">NEW</span>':''}${b.tag?`<span class="ftag">${esc(b.tag)}</span>`:''}${esc(b.cat)} · ${esc((b.date||'').replace('-','.'))}</div><h3>${esc(b.title)}</h3><p>${esc(b.desc)}</p></div>
-    </a></div>`).join(''):`<div class="empty">찾는 책자가 없어요. 다른 검색어를 입력해 보세요.</div>`;
+    </a></div>`).join(''):`<div class="empty">${esc(state.year)}년 책자를 준비하고 있어요.</div>`;
 }
-renderFeatured(); renderGrid();
+function renderYears(){
+  $('#years').innerHTML=YEARS.map(y=>`<button type="button" role="tab" data-y="${esc(y.year)}" aria-selected="${y.year===state.year}" class="${y.year===state.year?'on':''}">${esc(y.year)}</button>`).join('');
+  $('#years').querySelectorAll('button').forEach(el=>el.onclick=()=>setYear(el.dataset.y));
+}
+function heroHTML(){
+  const y=YEARS.find(x=>x.year===state.year)||{title:esc(state.year),sub:'',desc:''};
+  return `<div class="eyebrow">Digital Library</div><h1>${y.title}</h1><div class="sub">${esc(y.sub||'')}</div><p>${esc(y.desc||'')}</p>`;
+}
+function setYear(y,first){
+  if(!YEARS.some(x=>x.year===y)) return;
+  if(y===state.year&&!first) return;
+  state.year=y; renderYears();
+  try{history.replaceState(null,'','#y'+y)}catch(e){}
+  const parts=[$('#heroText'),$('#feat'),$('#grid')];
+  if(first){$('#heroText').innerHTML=heroHTML();renderFeatured();renderGrid();return}
+  parts.forEach(el=>el.classList.add('swap'));
+  setTimeout(()=>{$('#heroText').innerHTML=heroHTML();renderFeatured();renderGrid();
+    requestAnimationFrame(()=>parts.forEach(el=>el.classList.remove('swap')))},280);
+}
+(function initYear(){
+  const m=/^#y(\d{4})$/.exec(location.hash);
+  const withBooks=YEARS.find(x=>BOOKS.some(b=>bookYear(b)===x.year));
+  const y=(m&&YEARS.some(x=>x.year===m[1])&&m[1])||(DEFAULT_YEAR&&YEARS.some(x=>x.year===DEFAULT_YEAR)&&DEFAULT_YEAR)||(withBooks&&withBooks.year)||YEARS[0].year;
+  setYear(y,true);
+})();
+addEventListener('hashchange',()=>{const m=/^#y(\d{4})$/.exec(location.hash);if(m)setYear(m[1])});
 </script>
 </body>
 </html>

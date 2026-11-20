@@ -17,8 +17,13 @@
 @font-face{font-family:'Paperlogy';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-8ExtraBold.woff2') format('woff2');font-weight:800;font-display:swap}
 :root{
   --bg:#ffffff; --bg2:#fbf3ec; --ink:#231c17; --mut:#7a6d63; --line:#efe5da; --blue:#fde3cf; --blue2:#fff4eb;
-  --accent:#e8742a; --navy:#23305a; --teal:#2a9d8f; --mustard:#f2b134;
+  --accent:var(--ac); --navy:#23305a; --teal:#2a9d8f; --mustard:#f2b134;
   --serif:'Paperlogy','IBM Plex Sans KR',system-ui,sans-serif; --sans:'Paperlogy','IBM Plex Sans KR',system-ui,sans-serif;
+
+  /* 연도별 테마 색 (기본: 2025 주황) — 연도 설정의 theme 으로 바꿀 수 있어요 */
+  --ac:#e8742a; --ac2:#c25a17; --ac3:#f0c9ab; --ac4:#fdeadb; --ac5:#f3d6bf; --ac6:#eab994;
+  --acA:#e8742a2e; --acB:#e8742a22; --acC:#c25a1755; --tx2:#6a5a4f; --tx3:#a08d7e; --tx4:#8a7768;
+  --sh1:#f3ece4; --sh2:#e6dccf; --pl1:#f0e7dd; --pl2:#efe8df;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -40,33 +45,33 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 
 /* hero */
 .hero{padding:80px 0 64px;background:radial-gradient(circle at 85% 20%,var(--blue2),transparent 55%),var(--blue);color:var(--ink);position:relative;overflow:hidden}
-.hero::before{content:"";position:absolute;width:520px;height:520px;border-radius:50%;border:1px solid #e8742a2e;left:-180px;bottom:-300px}
-.hero::after{content:"";position:absolute;width:300px;height:300px;border-radius:50%;border:1px solid #e8742a22;left:-80px;bottom:-200px}
+.hero::before{content:"";position:absolute;width:520px;height:520px;border-radius:50%;border:1px solid var(--acA);left:-180px;bottom:-300px}
+.hero::after{content:"";position:absolute;width:300px;height:300px;border-radius:50%;border:1px solid var(--acB);left:-80px;bottom:-200px}
 .hero .wrap{position:relative;z-index:1}
-.hero .eyebrow{color:#e8742a}
+.hero .eyebrow{color:var(--ac)}
 .hero .wrap{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:56px;align-items:center}
 .eyebrow{font-size:12px;letter-spacing:.24em;font-weight:600;color:var(--accent);text-transform:uppercase}
 .eyebrow::before{content:"";display:inline-block;width:28px;height:2px;background:currentColor;vertical-align:middle;margin-right:10px}
 .hero h1{font-family:var(--serif);font-weight:800;font-size:clamp(30px,4.2vw,54px);line-height:1.22;margin:18px 0 16px;letter-spacing:-.03em}
-.hero .sub{display:inline-block;font-size:clamp(16px,1.7vw,21px);font-weight:700;color:#c25a17;background:#ffffffb3;padding:8px 16px;border-radius:99px;margin-bottom:22px;letter-spacing:-.01em}
-.hero h1 em{font-style:normal;color:#e8742a}
-.hero p{font-size:17px;line-height:1.75;color:#6a5a4f;max-width:30em;margin:0}
+.hero .sub{display:inline-block;font-size:clamp(16px,1.7vw,21px);font-weight:700;color:var(--ac2);background:#ffffffb3;padding:8px 16px;border-radius:99px;margin-bottom:22px;letter-spacing:-.01em}
+.hero h1 em{font-style:normal;color:var(--ac)}
+.hero p{font-size:17px;line-height:1.75;color:var(--tx2);max-width:30em;margin:0}
 .stats{display:flex;gap:36px;margin-top:34px}
 .stats div b{display:block;font-family:var(--serif);font-size:30px}
 .stats div span{font-size:13px;color:var(--mut)}
 
 /* year switch */
-.years{display:inline-flex;gap:4px;background:#ffffffc7;border:1px solid #f3d6bf;border-radius:99px;padding:5px;margin-bottom:30px;box-shadow:0 8px 24px -14px #c25a1755}
-.years button{border:0;background:none;padding:9px 26px;border-radius:99px;font:inherit;font-size:16px;font-weight:700;color:#a08d7e;cursor:pointer;transition:background .25s,color .25s,box-shadow .25s;letter-spacing:.02em}
-.years button:hover:not(.on){color:#c25a17}
-.years button.on{background:#e8742a;color:#fff;box-shadow:0 6px 16px -6px #e8742a}
+.years{display:inline-flex;gap:4px;background:#ffffffc7;border:1px solid var(--ac5);border-radius:99px;padding:5px;margin-bottom:30px;box-shadow:0 8px 24px -14px var(--acC)}
+.years button{border:0;background:none;padding:9px 26px;border-radius:99px;font:inherit;font-size:16px;font-weight:700;color:var(--tx3);cursor:pointer;transition:background .25s,color .25s,box-shadow .25s;letter-spacing:.02em}
+.years button:hover:not(.on){color:var(--ac2)}
+.years button.on{background:var(--ac);color:#fff;box-shadow:0 6px 16px -6px var(--ac)}
 .hero-text{transition:opacity .3s,transform .3s}
 .hero-text.swap,.feat.swap,#grid.swap{opacity:0;transform:translateY(10px)}
 .feat,#grid{transition:opacity .3s,transform .3s}
 .hero .sub:empty{display:none}
-.feat-empty{position:relative;z-index:1;width:min(290px,70%);aspect-ratio:1/1.414;border:2px dashed #eab994;border-radius:4px 8px 8px 4px;background:#ffffff8c;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:#c25a17;text-align:center;transform:rotate(-4deg)}
+.feat-empty{position:relative;z-index:1;width:min(290px,70%);aspect-ratio:1/1.414;border:2px dashed var(--ac6);border-radius:4px 8px 8px 4px;background:#ffffff8c;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--ac2);text-align:center;transform:rotate(-4deg)}
 .feat-empty b{font-size:40px;font-weight:800;letter-spacing:-.02em}
-.feat-empty span{font-size:14px;color:#8a7768}
+.feat-empty span{font-size:14px;color:var(--tx4)}
 /* featured */
 .feat .halo{position:absolute;width:88%;aspect-ratio:1;border-radius:50%;background:#ffffff8c;bottom:0;box-shadow:inset 0 0 0 1px #ffffff}
 .feat{position:relative;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;min-height:460px}
@@ -79,15 +84,15 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .feat-book.enter{opacity:0;transform:translateX(60px) rotate(4deg)}
 .feat-book.leave{opacity:0;transform:translateX(-60px) rotate(-10deg);pointer-events:none}
 .feat-nav{position:relative;z-index:2;display:flex;align-items:center;gap:14px;margin-top:30px}
-.feat-nav button{width:36px;height:36px;border-radius:50%;border:1px solid #f0c9ab;background:#fffffff2;color:#c25a17;display:grid;place-items:center;cursor:pointer;transition:.2s}
-.feat-nav button:hover{background:#e8742a;border-color:#e8742a;color:#fff}
+.feat-nav button{width:36px;height:36px;border-radius:50%;border:1px solid var(--ac3);background:#fffffff2;color:var(--ac2);display:grid;place-items:center;cursor:pointer;transition:.2s}
+.feat-nav button:hover{background:var(--ac);border-color:var(--ac);color:#fff}
 .feat-nav button svg{width:16px;height:16px}
-.feat-count{font-size:14px;font-weight:700;color:#c25a17;font-variant-numeric:tabular-nums;min-width:62px;text-align:center}
-.feat-count span{color:#a08d7e;font-weight:500}
+.feat-count{font-size:14px;font-weight:700;color:var(--ac2);font-variant-numeric:tabular-nums;min-width:62px;text-align:center}
+.feat-count span{color:var(--tx3);font-weight:500}
 .feat-bar{position:relative;z-index:2;width:min(240px,60%);height:3px;border-radius:3px;background:#ffffff;margin-top:12px;overflow:hidden}
-.feat-bar i{display:block;height:100%;width:0;background:#e8742a}
-.feat-cap{position:relative;z-index:2;margin-top:10px;font-size:13.5px;color:#6a5a4f;max-width:min(340px,90%);text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.feat-tag{position:absolute;top:-14px;right:-18px;z-index:5;background:#e8742a;color:#fff;font-size:12px;font-weight:600;padding:8px 14px;border-radius:99px;transform:rotate(6deg)}
+.feat-bar i{display:block;height:100%;width:0;background:var(--ac)}
+.feat-cap{position:relative;z-index:2;margin-top:10px;font-size:13.5px;color:var(--tx2);max-width:min(340px,90%);text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.feat-tag{position:absolute;top:-14px;right:-18px;z-index:5;background:var(--ac);color:#fff;font-size:12px;font-weight:600;padding:8px 14px;border-radius:99px;transform:rotate(6deg)}
 
 /* toolbar */
 .tools{position:sticky;top:64px;z-index:10;background:var(--bg);padding:18px 0 16px;border-bottom:1px solid var(--line)}
@@ -112,16 +117,16 @@ select.sort{height:42px;border:1px solid var(--line);border-radius:99px;padding:
 .card{display:block;position:relative;animation:rise .5s both}
 @keyframes rise{from{opacity:0;transform:translateY(14px)}}
 .card .stand{position:relative;padding:0 6% 0;}
-.card .stand::after{content:"";position:absolute;left:-8%;right:-8%;bottom:-14px;height:14px;background:linear-gradient(#f3ece4,#e6dccf);border-radius:3px;box-shadow:0 8px 14px -6px #0003}
+.card .stand::after{content:"";position:absolute;left:-8%;right:-8%;bottom:-14px;height:14px;background:linear-gradient(var(--sh1),var(--sh2));border-radius:3px;box-shadow:0 8px 14px -6px #0003}
 .book{position:relative;aspect-ratio:1/1.414;perspective:1400px;transform-style:preserve-3d;
   transition:transform .45s cubic-bezier(.3,.7,.2,1)}
 /* 안쪽 페이지 (종이 묶음) */
 .book .inner{position:absolute;inset:0;border-radius:2px 6px 6px 2px;background:#fff;overflow:hidden;
   box-shadow:0 1px 1px #0002,0 10px 22px -8px #0005,inset 0 0 0 1px #00000010;transition:box-shadow .45s}
 .book .inner::after{content:"";position:absolute;top:2%;bottom:2%;right:0;width:5px;z-index:2;
-  background:repeating-linear-gradient(90deg,#efe8df 0 1px,#fff 1px 2px);box-shadow:-1px 0 0 #0000000d}
+  background:repeating-linear-gradient(90deg,var(--pl2) 0 1px,#fff 1px 2px);box-shadow:-1px 0 0 #0000000d}
 .book .inner img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.95}
-.book .inner .lines{position:absolute;inset:14% 12% 14% 22%;background:repeating-linear-gradient(#0000 0 14px,#f0e7dd 14px 15px)}
+.book .inner .lines{position:absolute;inset:14% 12% 14% 22%;background:repeating-linear-gradient(#0000 0 14px,var(--pl1) 14px 15px)}
 .book .inner .lines::before{content:"";position:absolute;left:0;top:-9%;width:55%;height:7px;border-radius:4px;background:var(--accent);opacity:.5}
 /* 표지 */
 .book .cv{position:absolute;inset:0;z-index:3;border-radius:3px 7px 7px 3px;overflow:hidden;background:#ddd;
@@ -142,11 +147,11 @@ select.sort{height:42px;border:1px solid var(--line);border-radius:99px;padding:
 .card:focus-visible{outline:none}
 .card:focus-visible .book{outline:3px solid var(--accent);outline-offset:6px;border-radius:6px}
 .badge{display:inline-block;background:var(--accent);color:#fff;font-size:10.5px;font-weight:700;letter-spacing:.08em;padding:2px 8px;border-radius:99px;margin-right:6px;vertical-align:1px}
-.ftag{display:inline-block;background:#fdeadb;color:#c25a17;font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:99px;margin-right:6px;vertical-align:1px}
+.ftag{display:inline-block;background:var(--ac4);color:var(--ac2);font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:99px;margin-right:6px;vertical-align:1px}
 .item{display:flex;flex-direction:column;animation:rise .6s both}
 .item .card{animation:none}
-.dl{margin-top:16px;align-self:flex-start;display:inline-flex;align-items:center;gap:7px;padding:9px 16px;border-radius:99px;border:1px solid #f0c9ab;background:#fff;color:#c25a17;font-size:13px;font-weight:600;transition:.2s}
-.dl:hover{background:#e8742a;border-color:#e8742a;color:#fff}
+.dl{margin-top:16px;align-self:flex-start;display:inline-flex;align-items:center;gap:7px;padding:9px 16px;border-radius:99px;border:1px solid var(--ac3);background:#fff;color:var(--ac2);font-size:13px;font-weight:600;transition:.2s}
+.dl:hover{background:var(--ac);border-color:var(--ac);color:#fff}
 .dl svg{width:15px;height:15px}
 .meta{margin-top:30px}
 .meta .cat{font-size:12px;color:var(--accent);font-weight:600;letter-spacing:.04em}
@@ -262,10 +267,12 @@ const BOOKS = [
    - title: 큰 제목 (<em>…</em>은 주황색, <br>은 줄바꿈)
    - sub  : 주황 부제 (비우면 숨겨져요)
    - desc : 설명 문장
+   - theme: (선택) 그 연도 화면의 색. ac = 메인 색, ac2 = 진한 글씨 색, blue/blue2 = 상단 배경 색 … 비우면 기본 주황
    맨 위에 적은 연도가 버튼 맨 앞에 나와요.
    ===================================================================== */
 const YEARS = [
-  {year:'2026', title:'<em>2026 고양 G.R.O.W.</em><br>AI디지털 수업 실천', sub:'수업의 본질로 돌아가, AI와 나아가다', desc:'2026년 책자를 준비하고 있어요. 곧 이곳에서 만나 보실 수 있어요.'},
+  {year:'2026', title:'<em>2026 고양 G.R.O.W.</em><br>AI디지털 수업 실천', sub:'수업의 본질로 돌아가, AI와 나아가다', desc:'2026년 책자를 준비하고 있어요. 곧 이곳에서 만나 보실 수 있어요.',
+    theme:{ac:'#6786bc', ac2:'#4a66a3', ac3:'#c7d4ee', ac4:'#e6edf9', ac5:'#cfdcf1', ac6:'#9fb6e0', acA:'#6786bc2e', acB:'#6786bc22', acC:'#4a66a355', tx2:'#55607a', tx3:'#8d97ad', tx4:'#7a8499', sh1:'#eef2f9', sh2:'#dce4f1', pl1:'#e7edf7', pl2:'#e4eaf5', blue:'#dbe6f7', blue2:'#f4f8fe', bg2:'#f3f6fc', line:'#e2e8f3'}},
   {year:'2025', title:'<em>2025 G.R.O.W.</em><br>디지털 기반 수업 혁신 사례집', sub:'AI디지털 수업 실천, 학생 성장의 길을 열다', desc:'고양미래교육연구회 선생님들의 15가지 수업 사례를 한 편씩 e북으로 만나 보세요. 표지를 누르면 e북이 새 창으로 열립니다.'},
 ];
 const DEFAULT_YEAR = ''; // 처음 열릴 연도. 비워 두면 책자가 있는 가장 최근 연도로 열려요.
@@ -384,10 +391,15 @@ function heroHTML(){
   const y=YEARS.find(x=>x.year===state.year)||{title:esc(state.year),sub:'',desc:''};
   return `<div class="eyebrow">Digital Library</div><h1>${y.title}</h1><div class="sub">${esc(y.sub||'')}</div><p>${esc(y.desc||'')}</p>`;
 }
+const THEME_KEYS=['ac','ac2','ac3','ac4','ac5','ac6','acA','acB','acC','tx2','tx3','tx4','sh1','sh2','pl1','pl2','blue','blue2','bg2','line'];
+function applyTheme(){
+  const t=(YEARS.find(x=>x.year===state.year)||{}).theme||{}; const r=document.documentElement.style;
+  THEME_KEYS.forEach(k=>{ if(t[k]) r.setProperty('--'+k,t[k]); else r.removeProperty('--'+k); });
+}
 function setYear(y,first){
   if(!YEARS.some(x=>x.year===y)) return;
   if(y===state.year&&!first) return;
-  state.year=y; renderYears();
+  state.year=y; renderYears(); applyTheme();
   try{history.replaceState(null,'','#y'+y)}catch(e){}
   const parts=[$('#heroText'),$('#feat'),$('#grid')];
   if(first){$('#heroText').innerHTML=heroHTML();renderFeatured();renderGrid();return}
